@@ -1,12 +1,12 @@
 import * as vscode from "vscode";
 import { apiBaseUrl } from "./constants";
-import * as polka from "polka";
+import polka from "polka";
 import { TokenManager } from "./TokenManager";
 
 export const authenticate = (fn?: () => void) => {
   const app = polka();
 
-  app.get(`/auth/:token`, async (req, res) => {
+  app.get(`/auth/:token`, async (req: any, res: any) => {
     const { token } = req.params;
     if (!token) {
       res.end(`<h1>something went wrong</h1>`);
