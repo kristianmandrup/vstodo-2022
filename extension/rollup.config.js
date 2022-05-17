@@ -1,5 +1,5 @@
-// import svelte from "rollup-plugin-svelte";
-// import resolve from "@rollup/plugin-node-resolve";
+import svelte from "rollup-plugin-svelte";
+import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import { terser } from "rollup-plugin-terser";
 import preprocess from "svelte-preprocess";
@@ -24,16 +24,19 @@ export default fs
         file: "out/compiled/" + name + ".js",
       },
       plugins: [
-        // typescript({
-        //   tsconfig: "webviews/tsconfig.json",
-        //   sourceMap: !production,
-        //   inlineSources: !production,
-        // }),          
+        svelte({
+          preprocess: preprocess(),
+        }),
+        typescript({
+          tsconfig: "webviews/tsconfig.json",
+          sourceMap: !production,
+          inlineSources: !production,
+        }),          
         commonjs(),
-          // resolve({
-          //   browser: true,
-          //   dedupe: ["svelte"],
-          // }),          
+        resolve({
+          browser: true,
+          dedupe: ["svelte"],
+        }),          
         css({output}),
         preprocess(),
       // If we're building for production (npm run build
