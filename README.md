@@ -37,6 +37,16 @@ Run the uninstaller
 
 Open a fresh new CLI session
 
+## Setup Github OAuth app
+
+Go to [Github -> Settings -> Developers](github.com/settings/developers) and click on `Create new OAuth app`. Fill in the form:
+
+- App name: `VSTodo`
+- Homepage URL: `localhost:3002`
+- Callback URI: `http://localhost:3002/auth/github/callback`
+
+For Prod, create a new OAuth app with Prod settings (not using `localhost`)
+
 ### Install dependencies
 
 ```bash
