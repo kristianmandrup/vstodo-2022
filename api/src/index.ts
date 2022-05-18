@@ -1,7 +1,7 @@
 import "reflect-metadata";
 require("dotenv-safe").config();
 import express from "express";
-import { createConnection } from "typeorm";
+import { DataSource } from "typeorm";
 import { __prod__ } from "./constants";
 import { join } from "path";
 import { User } from "./entities/User";
@@ -12,11 +12,13 @@ import cors from "cors";
 import { Todo } from "./entities/Todo";
 import { isAuth } from "./isAuth";
 
-const main = async () => {
-  await createConnection({
+const main = () => {
+  new DataSource({
     type: "postgres",
     database: "vstodo",
     entities: [join(__dirname, "./entities/*.*")],
+    // optionally set user credentials and port number
+    // postgres:5432
     logging: !__prod__,
     synchronize: !__prod__,
   });
@@ -104,7 +106,7 @@ const main = async () => {
   });
 
   app.get("/me", async (req, res) => {
-    // Bearer 120jdklowqjed021901
+    // Bearer ....
     const authHeader = req.headers.authorization;
     if (!authHeader) {
       res.send({ user: null });
