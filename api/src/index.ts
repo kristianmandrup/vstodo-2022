@@ -132,7 +132,7 @@ const main = async () => {
       return;
     }
 
-    const user = await User.findOne(userId);
+    const user = await User.findOne({ where: { id: parseInt(userId) } });
 
     res.send({ user });
   });
