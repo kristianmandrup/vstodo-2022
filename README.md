@@ -7,6 +7,25 @@ code for [How to code a VS Code extension](https://www.youtube.com/watch?v=a5DX5
 - [API](api/Readme.md)
 - [Extension](extension/Readme.md)
 
+## Architecture
+
+- Extension
+- API
+
+### Extension architecture
+
+The main extension source files can be found in `extension/src`
+
+- `SidebarProvider` is a `vscode.WebviewViewProvider` which manages the `Sidebar` webview.
+
+### API architecture
+
+The main extension source files can be found in `extension/src`
+
+- `SidebarProvider` is a `vscode.WebviewViewProvider` which manages the `Sidebar` webview.
+- `getNonce` is a function to generate unique identifier
+- `constants` contains global extension constants such as `apiBaseUrl`
+
 ## Installation
 
 ### Install Postgres Database
