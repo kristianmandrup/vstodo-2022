@@ -2,8 +2,8 @@
   import { onMount } from "svelte";
   import type { User } from "../types";
   import Todos from "./Todos.svelte";
-  // tsvscode, apiBaseUrl
 
+  let _tsvscode = tsvscode;
   let accessToken = "";
   let loading = true;
   let user: User | null = null;
@@ -52,19 +52,17 @@
       }}>go back</button
     >
   {/if}
-  <!-- svelte-ignore missing-declaration -->
   <button
     on:click={() => {
       accessToken = "";
       user = null;
-      tsvscode.postMessage({ type: "logout", value: undefined });
+      _tsvscode.postMessage({ type: "logout", value: undefined });
     }}>logout</button
   >
 {:else}
-  <!-- svelte-ignore missing-declaration -->
   <button
     on:click={() => {
-      tsvscode.postMessage({ type: "authenticate", value: undefined });
+      _tsvscode.postMessage({ type: "authenticate", value: undefined });
     }}>login with GitHub</button
   >
 {/if}

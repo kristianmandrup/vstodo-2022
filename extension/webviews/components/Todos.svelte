@@ -6,6 +6,7 @@
   export let accessToken: string;
   let text = "";
   let todos: Array<{ text: string; completed: boolean; id: number }> = [];
+  let _apiBaseUrl = apiBaseUrl;
 
   async function addTodo(t: string) {
     const response = await fetch(`${apiBaseUrl}/todo`, {
@@ -55,13 +56,12 @@
 
 <ul>
   {#each todos as todo (todo.id)}
-    <!-- svelte-ignore missing-declaration -->
     <li
       class:complete={todo.completed}
       on:click={async () => {
         todo.completed = !todo.completed;
-        console.log({ apiBaseUrl });
-        const response = await fetch(`${apiBaseUrl}/todo`, {
+        console.log({ apiBaseUrl: _apiBaseUrl });
+        const response = await fetch(`${_apiBaseUrl}/todo`, {
           method: "PUT",
           body: JSON.stringify({
             id: todo.id,
