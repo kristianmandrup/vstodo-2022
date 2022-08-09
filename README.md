@@ -105,3 +105,13 @@ $ npm run dev
 [nodemon] starting `node dist/index.js`
 listening on localhost:3002
 ```
+
+## Run extension
+
+- build extension
+- Go to `dist/extension.js`
+- Press `F5` or go to `Run` menu and click `Start debugging`
+- Select `VS Code extension`
+- In the side panel, go to the bottom and select `VSTodo`
+
+You should see `VSTodo` window and `loading...`
