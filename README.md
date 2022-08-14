@@ -193,24 +193,79 @@ Svelte listening for token and fetching user and displaying
 window.addEventListener("message", async (event) => {
   const message = event.data;
   switch (message.type) {
+    // receive the token from vscode extension (from TokenManager)
     case "token":
       accessToken = message.value;
+      // call API route /me with the OAuth bearer auth header
       const response = await fetch(`${apiBaseUrl}/me`, {
         headers: {
           authorization: `Bearer ${accessToken}`,
         },
       });
       const data = await response.json();
+      // get the user from response
       user = data.user;
       loading = false;
   }
 });
+// ask vscode extension for an auth token
+tsvscode.postMessage({ type: "get-token", value: undefined });
+```
+
+The full extension Webview authentication listener setup
+
+```ts
+webviewView.webview.onDidReceiveMessage(async (data) => {
+  switch (data.type) {
+    case "logout": {
+      TokenManager.setToken("");
+      break;
+    }
+    case "authenticate": {
+      authenticate(() => {
+        webviewView.webview.postMessage({
+          type: "token",
+          value: TokenManager.getToken(),
+        });
+      });
+      break;
+    }
+    case "get-token": {
+      webviewView.webview.postMessage({
+        type: "token",
+        value: TokenManager.getToken(),
+      });
+      break;
+    }
+  }
+});
+```
+
+### Svelte auth display
+
+- Display when user available.
+- Display either `login` or `logout` button depending on login status
+
+```svelte
 // ... display when user available
 
 {#if loading}
   <div>loading...</div>
 {:else if user}
-  // ....
+  ....
+  <button
+    on:click={() => {
+      accessToken = "";
+      user = null;
+      _tsvscode.postMessage({ type: "logout", value: undefined });
+    }}>logout</button
+  >
+{:else}
+  <button
+    on:click={() => {
+      _tsvscode.postMessage({ type: "authenticate", value: undefined });
+    }}>login with GitHub</button
+  >
 {/if}
 ```
 
