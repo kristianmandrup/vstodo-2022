@@ -5,6 +5,18 @@ import { authenticate } from "./authenticate";
 import { SidebarProvider } from "./SidebarProvider";
 import { TokenManager } from "./TokenManager";
 
+// get the text of active text editor
+// See: https://stackoverflow.com/questions/45203543/vs-code-extension-api-to-get-the-range-of-the-whole-text-of-a-document
+export const getActiveText = () => {
+  const editor: any = vscode.window.activeTextEditor || {};
+  const { selection } = editor;
+  let { document } = editor;
+  if (!document) {
+    return;
+  }
+  return selection ? document.getText() : document.getText(selection);
+};
+
 export function activate(context: vscode.ExtensionContext) {
   TokenManager.globalState = context.globalState;
 
@@ -23,16 +35,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("vstodo.addTodo", () => {
-      const { activeTextEditor } = vscode.window;
-
-      if (!activeTextEditor) {
-        vscode.window.showInformationMessage("No active text editor");
+      const text = getActiveText();
+      if (!text) {
         return;
       }
-
-      const text = activeTextEditor.document.getText(
-        activeTextEditor.selection
-      );
 
       sidebarProvider._view?.webview.postMessage({
         type: "new-todo",
