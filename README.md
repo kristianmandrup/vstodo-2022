@@ -61,3 +61,36 @@ Now you can publish
 Alternatively you can publish like this
 
 `$ vsce publish -p <token>`
+
+## Versioning
+
+Publish and increment minor version
+
+`$ vsce publish minor`
+
+Publish as specific semver version
+
+`$ vsce publish 2.0.1`
+
+## Pre-release
+
+```bash
+$ vsce package --pre-release
+$ vsce publish --pre-release
+```
+
+## Unpublish
+
+`$ vsce unpublish (publisher id).(extension name)`
+
+## Bundle extension
+
+See [bundling extension](https://code.visualstudio.com/api/working-with-extensions/bundling-extension)
+
+## Testing
+
+See [helloworld-test-sample](https://github.com/microsoft/vscode-extension-samples/tree/main/helloworld-test-sample)
+
+## Continuous Integration
+
+See [continuous integration](https://code.visualstudio.com/api/working-with-extensions/continuous-integration)
