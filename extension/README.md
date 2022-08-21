@@ -8,6 +8,10 @@ This is the README for your extension "vstodo". After writing up a brief descrip
 - `compile` compile extension with webpack
 - `package` package extension with webpack
 
+## How to guide
+
+See [How to guide](how-to.md)
+
 ## Features
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
